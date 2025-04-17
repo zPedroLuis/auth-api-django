@@ -130,3 +130,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',  # Permitir acesso a todos por enquanto
     ],
 }
+
+AUTH_USER_MODEL = 'core.User'
