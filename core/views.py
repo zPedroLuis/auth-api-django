@@ -4,6 +4,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from .serializers import SignupSerializer, LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 
 # Cadastro
 class SignupView(APIView):
@@ -31,3 +32,13 @@ class LoginView(APIView):
                 }, status=status.HTTP_200_OK)
             return Response({'detail': 'Credenciais inválidas.'}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MeView(APIView):
+    permission_classes = [IsAuthenticated] 
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            'email': user.email,
+            'nome': user.nome,
+        })
